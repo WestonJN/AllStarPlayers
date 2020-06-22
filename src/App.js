@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useState, useEffect} from 'react';
 import './App.css';
 
 function App() {
+  const [players, setPlayers] = useState([])
+
+  useEffect(() =>{
+    async function fecthData(){
+      setPlayers(
+        fetch('http://data.nba.net/prod/v1/allstar/{year}/AS_roster.json')
+        .then(res => res.json())
+        .then(res => console.log(res))
+      )
+    }
+    fecthData();
+  }
+  ,[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h3>ALL STAR PLAYERS</h3>
+       
     </div>
   );
 }
