@@ -1,25 +1,33 @@
 import React,{useState, useEffect} from 'react';
+import Grid from '@material-ui/core/Grid';
 import './App.css';
 
 function App() {
-  const [players, setPlayers] = useState([])
+  const [users, setUsers] = useState([])
 
   useEffect(() =>{
-    async function fecthData(){
-      setPlayers(
-        fetch('http://data.nba.net/prod/v1/allstar/{year}/AS_roster.json')
+    async function fetchData(){
+      setUsers(
+    await  fetch('https://reqres.in/api/users?page=2')
         .then(res => res.json())
-        .then(res => console.log(res))
+        .then(res => res.data)
+        .catch(err => console.log(err, "fetch warning"))
       )
     }
-    fecthData();
+    fetchData();
   }
   ,[])
 
   return (
     <div className="App">
-      <h3>ALL STAR PLAYERS</h3>
-       
+      <h3>ALL STAR USERS</h3>
+      <Grid
+      conatiner
+      spacing={10}
+      style={{padding: '24px'}}
+      >
+       {users.map(user => user.first_name)}
+      </Grid>
     </div>
   );
 }
