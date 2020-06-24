@@ -1,35 +1,50 @@
 import React,{useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import './App.css';
+import PlayerCard from './PlayerCard';
+import fetch from "node-fetch";
 
-function App() {
-  const [users, setUsers] = useState([])
+export default function App() {
+  const [players, setPlayers] = useState([])
 
   useEffect(() =>{
-    async function fetchData(){
-      setUsers(
-    await  fetch('https://reqres.in/api/users?page=2')
-        .then(res => res.json())
-        .then(res => res.data)
-        .catch(err => console.log(err, "fetch warning"))
-      )
+    async function fetchPlayers(){
+      setPlayers(
+    await fetch('http://data.nba.net/prod/v1/allstar/2016/AS_roster.json')
+        .then((res) => res.json())
+        .then((res)=> res.sportsContent.roster[0].players[1610616833])
+        .catch((err) => console.log(err, "fetch warning"))
+      );
     }
-    fetchData();
+    fetchPlayers();
   }
-  ,[])
+  ,[]);
 
   return (
     <div className="App">
-      <h3>ALL STAR USERS</h3>
+      <h3>ALL STAR PLAYERS</h3>
       <Grid
       conatiner
       spacing={10}
       style={{padding: '24px'}}
       >
-       {users.map(user => user.first_name)}
+        {players.map( (players) => (
+        <Grid 
+        key={players.id}
+        item
+        xs={12} sm={6} md={4} lg={4} xl={3}
+        >    
+        <PlayerCard
+          key={players.id}
+          firstName={players.firstName}
+          lastName={players.lastName}
+          team={players.teamName}
+          position={players.positionFull}
+         />
+        </Grid>
+        ))}
       </Grid>
     </div>
   );
-}
+};
 
-export default App;
