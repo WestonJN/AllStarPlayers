@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PlayerCard({firstName,lastName,teamName,positionFull }) {
+export default function PlayerCard({firstName,lastName,team,position }) {
   const classes = useStyles();
 
   return (
@@ -28,7 +28,7 @@ export default function PlayerCard({firstName,lastName,teamName,positionFull }) 
           {firstName + " " + lastName}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-          {teamName+ " " + positionFull}
+          {team + " " + position}
           </Typography>
         </CardContent>
       </CardActionArea>

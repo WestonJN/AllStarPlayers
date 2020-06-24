@@ -5,14 +5,14 @@ import PlayerCard from './PlayerCard';
 import fetch from "node-fetch";
 
 export default function App() {
-  const [players, setPlayers] = useState([])
-
+  const [players, setPlayers] = React.useState([])
+  
   useEffect(() =>{
     async function fetchPlayers(){
       setPlayers(
-    await fetch('http://data.nba.net/prod/v1/allstar/2016/AS_roster.json')
+       await fetch("https://data.nba.net/prod/v1/allstar/2016/AS_roster.json")
         .then((res) => res.json())
-        .then((res)=> res.sportsContent.roster[0].players[1610616833])
+        .then((res => res.sportsContent.roster[0].players[1610616833]))
         .catch((err) => console.log(err, "fetch warning"))
       );
     }
@@ -23,8 +23,9 @@ export default function App() {
   return (
     <div className="App">
       <h3>ALL STAR PLAYERS</h3>
+  
       <Grid
-      conatiner
+      container
       spacing={10}
       style={{padding: '24px'}}
       >
